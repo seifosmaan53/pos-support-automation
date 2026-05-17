@@ -34,7 +34,7 @@
 
 ## Project overview
 
-I support **~1,100 retail stores** across the US from Egypt. Every support call ends the same way: I open ManageEngine, type the store number, the caller, the issue, the troubleshooting steps, the resolution, the category, sub-category, item, transaction number, payment type — and then start the next call. The mechanical part of ticketing was eating 30–40% of my call-handling time, and call notes were scattered across notepads I couldn't search.
+I support **~1,100 retail stores** for a US retailer. Every support call ends the same way: I open ManageEngine, type the store number, the caller, the issue, the troubleshooting steps, the resolution, the category, sub-category, item, transaction number, payment type — and then start the next call. The mechanical part of ticketing was eating 30–40% of my call-handling time, and call notes were scattered across notepads I couldn't search.
 
 **Store Ticket Assistant** is the tool I built to fix that. It records the call (or accepts a pasted transcript), transcribes it locally with whisper.cpp, extracts every ticket field the system asks for, and lets me copy each field into ManageEngine with one click. The original transcript is preserved alongside the structured fields, the recording is attached to the ticket, and the whole history is searchable.
 
@@ -91,7 +91,7 @@ Three motivating constraints:
 
 1. **Latency is the enemy of ticket quality.** When a call ends and I have to type 15 fields from memory, I trim the details. Voice-first capture means the transcript exists *before* I start typing — I'm editing rather than recalling.
 2. **Cloud transcription is a non-starter.** The calls reference customer transaction numbers, internal store identifiers, and occasionally cardholder context. Sending them to a third-party API is a compliance fight I don't want and a dependency I don't trust.
-3. **Latency on a 7,000 km link.** I'm in Egypt; the cloud transcription services with reasonable accuracy are US/EU-hosted. Even a 200 ms round-trip per chunk adds up when transcribing a 5-minute call in near-real-time.
+3. **Network independence.** A cloud-transcription dependency is a third party I can't ticket through when their service degrades — and an extra failure mode in the middle of a support call. Local transcription runs whether my internet does or not.
 
 Local-first solves all three. **whisper.cpp** runs on my MacBook, **SQLite** persists tickets next to the app, and the optional LLM (Ollama or LM Studio) runs on the same machine. Nothing leaves the laptop unless I explicitly export a backup.
 
