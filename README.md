@@ -16,7 +16,7 @@
 ## Table of contents
 
 - [Project overview](#project-overview)
-- [Demo](#demo)
+- [Screens](#screens)
 - [Why I built it](#why-i-built-it)
 - [Architecture](#architecture)
 - [Tech stack](#tech-stack)
@@ -40,50 +40,19 @@ I support **~1,100 retail stores** for a US retailer. Every support call ends th
 
 The app is intentionally local-first. Calls contain customer transaction numbers, store identifiers, and occasionally PII — none of which should ride over a cloud transcription API or be subject to a third-party's data-retention policy. Every transcription, every extraction, every LLM inference happens on the technician's machine.
 
-## Demo
+## Screens
 
-> Drop a `00-demo.gif` (≤ 5 MB, 12 fps recommended) at `docs/screenshots/00-demo.gif` and it will render below.
+### Home
 
-<p align="center">
-  <img src="docs/screenshots/00-demo.gif" alt="Animated demo of Store Ticket Assistant" width="800" />
-</p>
+![Home page in Developer Mode](docs/screenshots/01-home.png)
 
-### Key screens
+The daily start page. Quick actions for the four most-used flows (New Ticket, History, Run Health Check, Export Backup), today's status (last backup, audio rows, due reminders), and a list of recent tickets. The amber banner is the startup-warning system surfacing 3 audio files missing on disk — one click into Run Health Check resolves it. Shown here in Developer Mode so the full sidebar is visible (Workflow chain, Intelligence, Writing Lab, Templates, Style Examples).
 
-<table>
-  <tr>
-    <td align="center" width="50%">
-      <img src="docs/screenshots/01-home-daily.png" alt="Home page in Daily Mode" />
-      <br /><em>Home — Daily Mode (clean sidebar)</em>
-    </td>
-    <td align="center" width="50%">
-      <img src="docs/screenshots/02-new-ticket-recording.png" alt="New Ticket page mid-recording" />
-      <br /><em>New Ticket — recording in progress</em>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="docs/screenshots/03-live-conversation.png" alt="Live Conversation panel" />
-      <br /><em>Live Conversation with Q→A turn-taking</em>
-    </td>
-    <td align="center">
-      <img src="docs/screenshots/04-ticket-form-helper.png" alt="Ticket Form Helper" />
-      <br /><em>Ticket Form Helper with copy-ready fields</em>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="docs/screenshots/05-copy-mode.png" alt="Copy Mode walkthrough" />
-      <br /><em>Copy Mode — field-by-field walkthrough</em>
-    </td>
-    <td align="center">
-      <img src="docs/screenshots/06-settings-daily.png" alt="Settings — Daily Mode" />
-      <br /><em>Settings — Daily Mode (3 tabs)</em>
-    </td>
-  </tr>
-</table>
+### New Voice Ticket
 
-> Screenshot capture instructions are in [`docs/screenshots/README.md`](docs/screenshots/README.md).
+![New Voice Ticket page in Daily Mode](docs/screenshots/02-new-ticket.png)
+
+The capture screen — the most-used page in the app. A 5-step stepper (Record / Paste → Review → Ticket Fields → Copy → Save) shows progress through the workflow. The Next Step card calls out the immediate action. Below: the Local Recording panel with the Record button and the wired-up whisper.cpp executable + model paths confirmed inline. The Transcript editor accepts paste or hand-typed input as a fallback. Shown here in Daily Mode — sidebar collapsed to the 8 essentials.
 
 ## Why I built it
 
