@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body, #root {
+    height: 100%;
+  }
+  body {
+    @apply font-sans antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+    letter-spacing: -0.005em;
+  }
+  /* Subtle window-tinted surface so the app doesn't read as plain white. */
+  body {
+    background:
+      radial-gradient(1100px 600px at 0% -10%, rgba(31, 79, 240, 0.06), transparent 60%),
+      radial-gradient(900px 500px at 110% 110%, rgba(88, 145, 255, 0.05), transparent 55%),
+      theme("colors.slate.50");
+  }
+  .dark body {
+    background:
+      radial-gradient(1100px 600px at 0% -10%, rgba(52, 109, 255, 0.10), transparent 60%),
+      radial-gradient(900px 500px at 110% 110%, rgba(31, 79, 240, 0.08), transparent 55%),
+      theme("colors.slate.950");
+  }
+  /* Refined default focus ring color. */
+  *:focus-visible {
+    outline: none;
+  }
+
+  /* Brand-tinted selection so highlighted text feels deliberate. */
+  ::selection {
+    @apply bg-brand-200/70 text-brand-900;
+  }
+  .dark ::selection {
+    @apply bg-brand-800/60 text-brand-50;
+  }
+
+  /* Custom scrollbars — narrow, subtle, native feel. */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-slate-300/60 dark:bg-slate-700/60;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-400/80 dark:bg-slate-600/80;
+  }
+
+  /* Inline code: subtle pill, not the browser default ugly look. */
+  code:not(pre code) {
+    @apply rounded-md border border-slate-200 bg-slate-100 px-1.5 py-0.5 font-mono text-[0.85em] text-slate-800
+           dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200;
+  }
+
+  /* Keyboard hint chips. Use <kbd>Cmd</kbd> for shortcut docs. */
+  kbd {
+    @apply inline-flex h-5 min-w-[1.5rem] items-center justify-center rounded-md border border-slate-300 bg-slate-50 px-1.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-slate-700 shadow-[0_1px_0_rgba(15,23,42,0.06)]
+           dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200;
+  }
+}
+
+@layer components {
+  /* ── Page chrome ─────────────────────────────────────────────────── */
+  .page-title {
+    @apply text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-50;
+  }
+  .page-subtitle {
+    @apply mt-1 max-w-3xl text-sm leading-relaxed text-slate-600 dark:text-slate-400;
+  }
+  .page-section {
+    @apply mt-6 text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400;
+  }
+
+  /* ── Buttons ──────────────────────────────────────────────────────── */
+  .btn {
+    @apply inline-flex h-9 items-center justify-center gap-1.5 rounded-lg px-3.5 text-sm font-medium
+           transition-all duration-150 ease-out
+           focus-visible:ring-2 focus-visible:ring-brand-500/60 focus-visible:ring-offset-2
+           focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950
+           disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 text-white shadow-sm shadow-brand-900/10
+           hover:bg-brand-700 hover:shadow-md hover:shadow-brand-900/20
+           active:scale-[0.98];
+  }
+  .btn-secondary {
+    @apply btn border border-slate-200 bg-white text-slate-800 shadow-sm
+           hover:border-slate-300 hover:bg-slate-50
+           dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100
+           dark:hover:border-slate-600 dark:hover:bg-slate-800;
+  }
+  .btn-ghost {
+    @apply btn text-slate-700 hover:bg-slate-100
+           dark:text-slate-200 dark:hover:bg-slate-800;
+  }
+  .btn-danger {
+    @apply btn bg-rose-600 text-white shadow-sm shadow-rose-900/20
+           hover:bg-rose-700 hover:shadow-md hover:shadow-rose-900/30
+           active:scale-[0.98];
+  }
+
+  /* ── Inputs ───────────────────────────────────────────────────────── */
+  .input {
+    @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm
+           transition-colors placeholder:text-slate-400
+           hover:border-slate-400
+           focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30
+           disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-500
+           dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500
+           dark:hover:border-slate-600
+           dark:focus:border-brand-400 dark:focus:ring-brand-400/30
+           dark:disabled:bg-slate-900/50;
+  }
+  .label {
+    @apply block text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400;
+  }
+
+  /* ── Cards / surfaces ─────────────────────────────────────────────── */
+  .card {
+    @apply rounded-xl border border-slate-200/80 bg-white p-5
+           shadow-[0_1px_2px_rgba(15,23,42,0.04),0_1px_1px_rgba(15,23,42,0.03)]
+           dark:border-slate-800 dark:bg-slate-900/70
+           dark:shadow-[0_1px_2px_rgba(0,0,0,0.4)];
+  }
+  .card-elevated {
+    @apply card shadow-[0_8px_24px_-12px_rgba(15,23,42,0.18),0_2px_4px_rgba(15,23,42,0.04)]
+           dark:shadow-[0_12px_32px_-16px_rgba(0,0,0,0.6)];
+  }
+
+  /* ── Badges ───────────────────────────────────────────────────────── */
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium;
+  }
+  .badge-neutral {
+    @apply badge border-slate-200 bg-slate-100 text-slate-700
+           dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200;
+  }
+  .badge-brand {
+    @apply badge border-brand-200 bg-brand-50 text-brand-700
+           dark:border-brand-800 dark:bg-brand-900/40 dark:text-brand-300;
+  }
+  .badge-success {
+    @apply badge border-emerald-200 bg-emerald-50 text-emerald-700
+           dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300;
+  }
+  .badge-warning {
+    @apply badge border-amber-200 bg-amber-50 text-amber-700
+           dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-300;
+  }
+  .badge-danger {
+    @apply badge border-rose-200 bg-rose-50 text-rose-700
+           dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-300;
+  }
+
+  /* ── Sidebar nav ──────────────────────────────────────────────────── */
+  .nav-section {
+    @apply mt-3 px-3 pb-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500;
+  }
+}
+
+@layer utilities {
+  /* Used by modal/dialog entrance and any other ephemeral overlays. */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: translateY(4px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes pageEnter {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .page-enter {
+    animation: pageEnter 200ms ease-out both;
+  }
+}

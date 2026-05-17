@@ -1,0 +1,26 @@
+[package]
+name = "store-ticket-assistant"
+version = "0.1.0"
+description = "Local-first, voice-first IT support ticket assistant"
+authors = ["Seif Osman"]
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "store_ticket_assistant_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.0", features = [] }
+
+[dependencies]
+tauri = { version = "2.1", features = [] }
+tauri-plugin-clipboard-manager = "2.2"
+tauri-plugin-dialog = "2.2"
+tauri-plugin-shell = "2.2"
+tauri-plugin-http = "2"
+tauri-plugin-sql = { version = "2", features = ["sqlite"] }
+serde = { version = "1", features = ["derive"] }
+
+[features]
+custom-protocol = ["tauri/custom-protocol"]

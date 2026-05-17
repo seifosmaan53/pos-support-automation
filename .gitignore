@@ -1,0 +1,47 @@
+# Dependencies / build output
+node_modules
+dist
+dist-ssr
+*.local
+*.tsbuildinfo
+coverage
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment / secrets — never commit
+.env
+.env.*
+*.pem
+*.key
+*.cert
+*.p12
+
+# Tauri / Rust build output
+src-tauri/target
+src-tauri/gen
+
+# Local app data — keep recordings + extracted state out of the repo
+data/
+models/
+audio/
+exports/
+backups/
+*.sqlite
+*.sqlite-journal
+*.wav
+*.bin

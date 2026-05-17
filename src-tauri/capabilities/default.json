@@ -1,0 +1,28 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Default permissions for Store Ticket Assistant",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "clipboard-manager:allow-write-text",
+    "clipboard-manager:allow-read-text",
+    "dialog:allow-open",
+    "dialog:allow-save",
+    "shell:allow-open",
+    "sql:default",
+    "sql:allow-load",
+    "sql:allow-execute",
+    "sql:allow-select",
+    "sql:allow-close",
+    {
+      "identifier": "http:default",
+      "allow": [
+        { "url": "http://localhost:11434/*" },
+        { "url": "http://127.0.0.1:11434/*" },
+        { "url": "http://localhost:1234/*" },
+        { "url": "http://127.0.0.1:1234/*" }
+      ]
+    }
+  ]
+}
