@@ -1,5 +1,8 @@
 # Store Ticket Assistant
 
+<!--portfolio-note-->
+> **Portfolio note —** one of two POS-related builds. **This is the local-first desktop app (Tauri + React + whisper.cpp)** that turns retail support calls into pre-filled tickets. Sibling: [pos-system](https://github.com/seifosmaan53/pos-system) (from-scratch vanilla Node + SQLite POS).
+
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Platform: macOS · Windows · Linux](https://img.shields.io/badge/Platform-macOS%20%C2%B7%20Windows%20%C2%B7%20Linux-lightgrey)
 ![Local-first](https://img.shields.io/badge/Local--first-100%25-success)
