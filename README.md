@@ -1,7 +1,7 @@
 # Store Ticket Assistant
 
 <!--portfolio-note-->
-> **Portfolio note —** one of two POS-related builds. **This is the local-first desktop app (Tauri + React + whisper.cpp)** that turns retail support calls into pre-filled tickets. Sibling: [pos-system](https://github.com/seifosmaan53/pos-system) (from-scratch vanilla Node + SQLite POS).
+> **Portfolio note —** one of two POS-related builds. **This is the local-first desktop app (Tauri + React + whisper.cpp)** that turns retail support calls into pre-filled tickets. Sibling: [pos-system](https://github.com/seifosmaan53/pos-system) (from-scratch vanilla Node + SQLite POS). The repo is named `pos-support-automation` (what the tool automates); the app itself is branded **Store Ticket Assistant** (what a technician sees on screen) — same project, two names for two audiences.
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Platform: macOS · Windows · Linux](https://img.shields.io/badge/Platform-macOS%20%C2%B7%20Windows%20%C2%B7%20Linux-lightgrey)
@@ -10,7 +10,7 @@
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
 ![Rust](https://img.shields.io/badge/Rust-1.77+-DEA584?logo=rust&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-277%2F277-brightgreen)
+[![CI](https://github.com/seifosmaan53/pos-support-automation/actions/workflows/ci.yml/badge.svg)](https://github.com/seifosmaan53/pos-support-automation/actions/workflows/ci.yml)
 
 > A desktop app that turns retail POS support calls into pre-filled ticket forms. **100% local** — whisper.cpp + Tauri + React. No cloud, no API keys, no telemetry.
 
@@ -37,7 +37,7 @@
 
 ## Project overview
 
-I support **~1,100 retail stores** for a US retailer. Every support call ends the same way: I open ManageEngine, type the store number, the caller, the issue, the troubleshooting steps, the resolution, the category, sub-category, item, transaction number, payment type — and then start the next call. The mechanical part of ticketing was eating 30–40% of my call-handling time, and call notes were scattered across notepads I couldn't search.
+I support **890 retail stores** for a US retailer. Every support call ends the same way: I open ManageEngine, type the store number, the caller, the issue, the troubleshooting steps, the resolution, the category, sub-category, item, transaction number, payment type — and then start the next call. The mechanical part of ticketing was eating 30–40% of my call-handling time, and call notes were scattered across notepads I couldn't search.
 
 **Store Ticket Assistant** is the tool I built to fix that. It records the call (or accepts a pasted transcript), transcribes it locally with whisper.cpp, extracts every ticket field the system asks for, and lets me copy each field into ManageEngine with one click. The original transcript is preserved alongside the structured fields, the recording is attached to the ticket, and the whole history is searchable.
 
@@ -280,7 +280,7 @@ Runs:
 - **Analyzer regression** (`scripts/test-analyzer.mjs`) — 6 cases covering the rule-based extractor end-to-end
 - **Writing regression** (`scripts/test-self-tests.mjs`) — 12 full transcript cases asserting on 73 specific field values (Store 521 alone has 15 fields; the suite has caught two analyzer regressions in the wild)
 
-All four gates ship green.
+All four gates run on every push via [GitHub Actions](.github/workflows/ci.yml) — the badge at the top of this README is the live status, not a hand-updated number.
 
 ## What I learned
 
@@ -314,7 +314,7 @@ whisper is going to hallucinate sometimes; you can't fix that at the model level
 
 Things I'd add if the daily use surfaces a need:
 
-- **Cross-platform release pipeline** — currently I build manually per platform; a GitHub Actions matrix would produce signed builds for macOS / Windows / Linux on each tag.
+- **Cross-platform release pipeline** — CI now runs typecheck/Vitest/regressions on every push (see badge above), but release builds are still manual per platform; a GitHub Actions matrix would produce signed builds for macOS / Windows / Linux on each tag.
 - **Cloud-optional sync (opt-in, encrypted)** — for the case where I want my tickets accessible from a second machine without manually moving a backup folder.
 - **Webview component test coverage** — Vitest unit tests are strong but Playwright would let me assert on the full user flow.
 - **Keyboard shortcuts** — global hotkey to start/stop recording from any app.

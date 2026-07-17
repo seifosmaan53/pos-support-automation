@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    name: Typecheck, Vitest, regression suites
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck (tsc --noEmit)
+        run: npx tsc --noEmit
+
+      - name: Vitest (unit + component tests)
+        run: npx vitest run
+
+      - name: Analyzer regression suite
+        run: node scripts/test-analyzer.mjs
+
+      - name: Writing regression suite
+        run: node scripts/test-self-tests.mjs

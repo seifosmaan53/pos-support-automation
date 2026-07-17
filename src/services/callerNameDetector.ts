@@ -6,7 +6,7 @@
  * purely pattern-based: it knows shapes ("this is X", "may I have your
  * name?" → "X.", "the manager, X") and what's NOT a name (store/register/
  * keyboard/yes/no etc.). It does NOT carry a list of acceptable names —
- * the system supports ~1100 stores, so any normal first name should work.
+ * the system supports 890 stores, so any normal first name should work.
  *
  * Three entry points:
  *   • detectCallerNameInText(text)        — one utterance, inline patterns only

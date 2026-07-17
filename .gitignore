@@ -36,7 +36,9 @@ src-tauri/target
 src-tauri/gen
 
 # Local app data — keep recordings + extracted state out of the repo
-data/
+# NOTE: scoped with a leading slash — an unscoped "data/" also matches
+# src/data/, which previously excluded real source files from every commit.
+/data/
 models/
 audio/
 exports/
