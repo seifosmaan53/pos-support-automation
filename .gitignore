@@ -47,3 +47,11 @@ backups/
 *.sqlite-journal
 *.wav
 *.bin
+
+# Built macOS app bundles. Tauri writes releases into src-tauri/target/release/bundle/
+# (already ignored above); a stray copy of the .app had been committed at the repo root,
+# adding a 20 MB arm64-only binary to every clone. Build artifacts do not belong in git.
+Store Ticket Assistant
+Store Ticket Assistant.app/
+*.app/
+*.dmg
