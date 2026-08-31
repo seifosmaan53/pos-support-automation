@@ -74,6 +74,11 @@ import { friendlyWhisperError, transcribeAudio } from "./whisperService";
 import { generateAllSummaries } from "./summaryGenerator";
 import { generateTicketFields } from "./ticketFieldGenerator";
 import {
+  deriveKeywords,
+  derivePartTriggers,
+  formatDueLabel,
+} from "./ticketDerivation";
+import {
   applyAlternatingSpeakers,
   applyBulkSpeakerCorrection,
   applySpeakerCorrection,
@@ -2901,32 +2906,6 @@ function buildPrefillContent<T extends KnowledgeItemType>(
   return {} as Partial<KnowledgeContentByType[T]>;
 }
 
-function deriveKeywords(details: ExtractedDetails, fields: TicketFields): string[] {
-  const out = new Set<string>();
-  const push = (s: string | undefined) => {
-    if (!s) return;
-    const t = s.trim();
-    if (t.length >= 3) out.add(t);
-  };
-  push(details.deviceType);
-  push(details.category);
-  push(details.subCategory);
-  push(details.item);
-  for (const d of details.devices ?? []) push(d);
-  for (const w of (fields.subject || "").split(/\s+/)) {
-    if (w.length >= 4) out.add(w.replace(/[^A-Za-z0-9]/g, ""));
-  }
-  return [...out].filter(Boolean).slice(0, 8);
-}
-
-function derivePartTriggers(details: ExtractedDetails): string[] {
-  const out: string[] = [];
-  if (details.errorMessage) out.push(details.errorMessage);
-  for (const s of details.symptoms ?? []) out.push(s);
-  if (details.replacementReason) out.push(details.replacementReason);
-  return out.slice(0, 5);
-}
-
 /**
  * Phase 11A — one-chunk worker. Encodes the chunk to WAV, writes it to disk,
  * runs whisper.cpp on it, applies transcript repair, classifies the speaker
@@ -3200,15 +3179,4 @@ async function processLiveChunk(
  * short ISO fallback. Lives here (not in formatDate.ts) because no other
  * caller wants exactly this shape.
  */
-function formatDueLabel(iso: string): string {
-  const t = Date.parse(iso);
-  if (!Number.isFinite(t)) return iso;
-  const d = new Date(t);
-  const now = new Date();
-  const sameDay = d.toDateString() === now.toDateString();
-  if (sameDay) {
-    return `today at ${d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`;
-  }
-  return `${d.toLocaleDateString([], { weekday: "short" })} at ${d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`;
-}
 
