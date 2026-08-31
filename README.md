@@ -109,7 +109,7 @@ graph TD
 | **Optional LLM** | Ollama (default `llama3.1:8b`) or LM Studio (OpenAI-compatible local API) |
 | **Audio capture** | `MediaRecorder` + `OfflineAudioContext` (16 kHz mono PCM16 WAV) |
 | **Audio metering** | Web Audio `AnalyserNode` for peak/RMS levels |
-| **Testing** | Vitest (24 test files / 277 tests), plus two custom regression suites (analyzer, writing) |
+| **Testing** | Vitest (25 test files / 292 tests), plus two custom regression suites (analyzer, writing) |
 | **Build** | `npm run tauri:build` → `.app` + `.dmg` (macOS), `.msi` (Windows), `.deb`/`.AppImage` (Linux) |
 
 ## Engineering challenges solved
@@ -276,13 +276,17 @@ npm run check:all
 
 Runs:
 - **TypeScript** (`tsc --noEmit`)
-- **Vitest** (24 test files, 277 tests — UI components, classifier, extractor, backup, all services)
+- **Vitest** (25 test files, 292 tests — UI components, classifier, extractor, backup, all services)
 - **Analyzer regression** (`scripts/test-analyzer.mjs`) — 6 cases covering the rule-based extractor end-to-end
 - **Writing regression** (`scripts/test-self-tests.mjs`) — the 12-case canonical suite from `src/services/extractionSelfTests.ts`, asserting on the specific extracted field values of each full transcript (Store 521 / `test-12` is tracked explicitly; the suite has caught analyzer regressions the type checker and unit tests missed)
 
 All four gates run on every push via [GitHub Actions](.github/workflows/ci.yml) — the badge at the top of this README is the live status, not a hand-updated number.
 
-> **Known gap on a clean clone:** two source modules — `src/data/defaultCategories.ts` (the category taxonomy + extractor rules) and `src/data/smokeTestTranscripts.ts` — are absent from version control. An earlier unscoped `data/` line in `.gitignore` also matched `src/data/`, so these files were never committed; the rule is now scoped to `/data/`, but the two files still have to be restored and committed. Because `transcriptAnalyzer.ts` and three other modules import them, a fresh clone today builds only partially: `npx vitest run` collects **20 of 24 test files and 248 tests pass**, while 4 files fail to load; `tsc --noEmit` and both regression scripts also fail until the files are restored. The CI badge above reflects this honestly — it stays red until the two files land in a commit, at which point the full 24-file / 277-test suite runs green.
+> **Clean-clone status:** verified. `src/data/defaultCategories.ts` and
+> `src/data/smokeTestTranscripts.ts` were once excluded by an unscoped `data/` line in
+> `.gitignore`, so a fresh clone could not build. The rule is scoped to `/data/` and both
+> files are committed. A clean `npm ci` now passes every gate: `tsc --noEmit` clean,
+> 25 test files / 292 tests, analyzer 6/6, writing 12/12.
 
 ## What I learned
 
