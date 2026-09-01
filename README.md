@@ -57,6 +57,43 @@ The daily start page. Quick actions for the four most-used flows (New Ticket, Hi
 
 The capture screen — the most-used page in the app. A 5-step stepper (Record / Paste → Review → Ticket Fields → Copy → Save) shows progress through the workflow. The Next Step card calls out the immediate action. Below: the Local Recording panel with the Record button and the wired-up whisper.cpp executable + model paths confirmed inline. The Transcript editor accepts paste or hand-typed input as a fallback. Shown here in Daily Mode — sidebar collapsed to the 8 essentials.
 
+### Ticket Form Helper
+
+![Ticket fields with a per-field confidence self-review](docs/screenshots/03-ticket-form-helper.jpg)
+
+What the extractor produced from a transcript, with a self-review over the top. Each
+field carries its own confidence and the evidence for it — store number matched "9" in
+the transcript, four troubleshooting steps captured, a part replacement detected. The
+two red badges are the useful part: `Caller: missing` and `Register: missing` say
+plainly that the call never supplied them, and the overall banner flags one step whose
+attribution is ambiguous. It tells you what it does *not* know instead of inventing it,
+and labels itself best-effort rather than a guarantee.
+
+### History
+
+![Saved ticket with generated title, tags and summary](docs/screenshots/04-history.jpg)
+
+Saved tickets, stored locally. Each gets a generated title, extracted tags (store
+number, device, resolution state, part request) and a cleaned summary, all searchable
+and exportable to JSON or CSV.
+
+### Knowledge Base
+
+![Knowledge Base entry types](docs/screenshots/05-knowledge-base.jpg)
+
+User-authored facts, troubleshooting guides, part-request and escalation rules, and
+store/device notes. Knowledge assists ticket generation but never invents facts that
+are not in the transcript — the boundary that keeps the output trustworthy.
+
+### System Health
+
+![System Health with self-tests and a release-build gate](docs/screenshots/06-system-health.jpg)
+
+Storage, audio, transcription and AI provider status in one place, and it actually runs
+the checks rather than reporting a cached verdict — here the 12 canonical transcripts
+and the writing tests both pass on demand. Anything not yet done is amber rather than
+hidden, including the 12-item gate that has to be green before a build ships.
+
 ## Why I built it
 
 Three motivating constraints:
