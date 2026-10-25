@@ -37,9 +37,9 @@
 
 ## Project overview
 
-I support **890 retail stores** for a US retailer. Every support call ends the same way: I open ManageEngine, type the store number, the caller, the issue, the troubleshooting steps, the resolution, the category, sub-category, item, transaction number, payment type — and then start the next call. The mechanical part of ticketing was eating 30–40% of my call-handling time, and call notes were scattered across notepads I couldn't search.
+I support **890 retail stores** for a US retailer. Every support call ends the same way: I open the ticketing system, type the store number, the caller, the issue, the troubleshooting steps, the resolution, the category, sub-category, item, transaction number, payment type — and then start the next call. The mechanical part of ticketing was eating 30–40% of my call-handling time, and call notes were scattered across notepads I couldn't search.
 
-**Store Ticket Assistant** is the tool I built to fix that. It records the call (or accepts a pasted transcript), transcribes it locally with whisper.cpp, extracts every ticket field the system asks for, and lets me copy each field into ManageEngine with one click. The original transcript is preserved alongside the structured fields, the recording is attached to the ticket, and the whole history is searchable.
+**Store Ticket Assistant** is the tool I built to fix that. It records the call (or accepts a pasted transcript), transcribes it locally with whisper.cpp, extracts every ticket field the system asks for, and lets me copy each field into the ticketing system with one click. The original transcript is preserved alongside the structured fields, the recording is attached to the ticket, and the whole history is searchable.
 
 The app is intentionally local-first. Calls contain customer transaction numbers, store identifiers, and occasionally PII — none of which should ride over a cloud transcription API or be subject to a third-party's data-retention policy. Every transcription, every extraction, every LLM inference happens on the technician's machine.
 
